@@ -27,32 +27,23 @@ function Body(props) {
   )
 }
 
+
+const { width } = Dimensions.get('window');
+
 function BodyTiles(props) {
-  return(
-        <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          alignSelf: 'left',
-          alignItems: 'left',
-        }}
-        data={props.list} 
-        numColumns={numCols}
-        key={numCols}
-        renderItem={({item, index}) => 
-            <ProductTile product={item}/>
-          }/>
+  return (
+    <View>
+      {console.log("screen width:"+ width)}
+      <View style={{flexDirection:"row", flexWrap:"wrap", width: width}}>
+      { props.list.map((item, index)=> <ProductTile key={index} product={item}/> )}
+    </View>
+    </View>
   )
 }
 
-
-const { screenWidth } = Dimensions.get('window').width;
-const numCols = 5;
-const tileWidth = screenWidth / numCols;
-
 const cardStyle = StyleSheet.create({
   container: {
-    flex:1,
-    maxWidth: 200,
+    maxWidth: 150,
     height:undefined,
     padding: 5,
     margin: 10
@@ -77,7 +68,7 @@ function ProductTile(prop) {
         {prop.product.name}
       </Text>
       <View>
-        <Button title='GO' onPress={async ()=> await Linking.openURL(prop.product.affiliateLink)}/>  
+        <Button title='GO' onPress={async ()=> { console.log("click on: "+prop.product.name+" "+prop.product.affiliateLink); await Linking.openURL(prop.product.affiliateLink)}}/>  
       </View>
     </View>
   )
@@ -85,7 +76,7 @@ function ProductTile(prop) {
 
 function Footer() {
   return (
-    <View>This is the Footer</View>
+    <View><Text>This is the Footer</Text></View>
   )
 }
 
