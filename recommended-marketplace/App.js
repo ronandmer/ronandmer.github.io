@@ -1,4 +1,4 @@
-import { Button, FlatList, Image, Linking, ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Button , Image, Linking, ScrollView, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 
 
 export default function App() {
@@ -13,9 +13,27 @@ export default function App() {
   );
 }
 
+var headerStyle = StyleSheet.create({
+  container:{
+    maxHeight:150,
+    flex: true,
+    flexDirection: 'row',
+    padding: 5,
+    margin: 10,
+  }
+})
+
 function Header() {
   return (
-    <Text>This is the header</Text>
+    <View style={[headerStyle.container]}>
+      <View style={{height: 50, maxWidth:260}}>
+      <Image style={{maxHeight: '90%', maxWidth:'90%', aspectRatio:1}}
+      source={require('./recommended-marketplace-high-resolution-logo-transparent.png')}/>
+      </View>
+      <View>
+      <Text>This is the header</Text>
+      </View>
+    </View>
   )
 }
 
@@ -43,7 +61,7 @@ function BodyTiles(props) {
 
 const cardStyle = StyleSheet.create({
   container: {
-    maxWidth: 150,
+    maxWidth: 193,
     height:undefined,
     padding: 5,
     margin: 10
@@ -59,24 +77,31 @@ const cardStyle = StyleSheet.create({
 
 function ProductTile(prop) {
   return(
-   <View style={[cardStyle.container, cardStyle.shadowProp]}>
-      <View style={{alignItems:'center', backgroundColor: '#f8f8f8'}}>
-        <Image style={{ width: '60%', height: undefined, aspectRatio: 1,}} 
-           source={{uri: prop.product.images[0]}}/> 
+    <TouchableOpacity  onPress={async ()=> { console.log("click on: "+prop.product.name+" "+prop.product.affiliateLink); await Linking.openURL(prop.product.affiliateLink)}}>
+      <View style={[cardStyle.container, cardStyle.shadowProp]}>
+          <View style={{alignItems:'center', backgroundColor: '#f8f8f8'}}>
+            <Image style={{ width: '100%', height: undefined, aspectRatio: 1,}} 
+              source={{uri: prop.product.images[0]}}/> 
+          </View>
+          <Text style={{alignItems:"center", marginBottom:10}}>
+            {prop.product.name}
+          </Text>
       </View>
-      <Text style={{alignItems:"center", marginBottom:10}}>
-        {prop.product.name}
-      </Text>
-      <View>
-        <Button title='GO' onPress={async ()=> { console.log("click on: "+prop.product.name+" "+prop.product.affiliateLink); await Linking.openURL(prop.product.affiliateLink)}}/>  
-      </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
+var footerStyle = StyleSheet.create({
+  container:{
+    height: 200
+  }
+  
+});
 function Footer() {
   return (
-    <View><Text>This is the Footer</Text></View>
+    <View style={[footerStyle.container]}>
+      <Text>This is the Footer</Text>
+    </View>
   )
 }
 
