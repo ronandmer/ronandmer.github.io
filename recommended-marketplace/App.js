@@ -1,5 +1,6 @@
-import { Button , Image, Linking, ScrollView, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Button , Image, Linking, ScrollView, StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 
+const { width } = Dimensions.get('window');
 
 export default function App() {
   return (
@@ -27,11 +28,17 @@ function Header() {
   return (
     <View style={[headerStyle.container]}>
       <View style={{height: 50, maxWidth:260}}>
-      <Image style={{maxHeight: '90%', maxWidth:'90%', aspectRatio:1}}
-      source={require('./recommended-marketplace-high-resolution-logo-transparent.png')}/>
+        <Image style={{maxHeight: '90%', maxWidth:'90%', aspectRatio:1}}
+        source={require('./recommended-marketplace-high-resolution-logo-transparent.png')}/>
       </View>
       <View>
-      <Text>This is the header</Text>
+      </View>
+      <View>
+        <TextInput
+          style = {{border: '1px solid green', height:35, width:width/2.1, padding: 15,  borderRadius: 10}}
+          onChangeText={(a)=> console.log(a)}
+          placeholder='search...'
+        />
       </View>
     </View>
   )
@@ -46,15 +53,14 @@ function Body(props) {
 }
 
 
-const { width } = Dimensions.get('window');
 
 function BodyTiles(props) {
   return (
     <View>
       {console.log("screen width:"+ width)}
-      <View style={{flexDirection:"row", flexWrap:"wrap", width: width}}>
+      <View style={{flexDirection:"row", flexWrap:"wrap", width: width, justifyContent: 'center'}}>
       { props.list.map((item, index)=> <ProductTile key={index} product={item}/> )}
-    </View>
+      </View>
     </View>
   )
 }
